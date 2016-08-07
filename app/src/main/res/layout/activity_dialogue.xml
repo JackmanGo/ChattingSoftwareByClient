@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary" >
+    </android.support.v7.widget.Toolbar>
+
+    <ListView
+        android:id="@+id/lv_conversation_detail"
+        android:layout_width="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:layout_height="0dp"
+        android:listSelector="@android:color/transparent"
+        android:background="@mipmap/conversation_detail_content_bg"
+        android:divider="@null"
+        android:layout_weight="2" >
+    </ListView>
+    <!--  android:listSelector="@android:color/transparent" 设置选中list条目的时候，显示的颜色为透明 -->
+    <!--  android:cacheColorHint="@android:color/transparent"  设置listview的缓冲色为透明  -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical" >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@mipmap/bg_top_bar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/btn_voice"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@mipmap/message_input_voice"
+            />
+        <EditText
+            android:id="@+id/et_input_conversation_detail"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:background="@mipmap/message_input_edittext_box" />
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@drawable/send_message_button"
+            />
+    </LinearLayout>
+    </LinearLayout>
+   </LinearLayout>

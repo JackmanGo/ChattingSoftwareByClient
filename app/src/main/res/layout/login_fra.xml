@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myAttrs="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<com.example.wang.view.TopBar
+    android:id="@+id/login_topbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    myAttrs:show_action="false"
+    myAttrs:title_name="登录">
+    </com.example.wang.view.TopBar>
+    <EditText
+        android:id="@+id/et_login_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/login_selector_input"
+        android:drawableLeft="@mipmap/user_account_icon"
+        android:drawablePadding="15dp"
+        android:drawableStart="@mipmap/user_account_icon"
+        android:hint="用户名/手机号"
+        android:minHeight="40dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/et_login_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/login_selector_input"
+        android:drawableLeft="@mipmap/user_pwd_lock_icon"
+        android:drawablePadding="15dp"
+        android:drawableStart="@mipmap/user_pwd_lock_icon"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        android:minHeight="40dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_login"
+        android:text="登录"
+        android:textColor="#FFFFFFFF" />
+<ProgressBar
+    android:id="@+id/login_pb"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:visibility="gone"
+    />
+</LinearLayout>

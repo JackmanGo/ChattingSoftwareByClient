@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TableLayout
+        android:id="@+id/tl_receive"
+        android:layout_width="match_parent"
+        android:shrinkColumns="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        >
+
+        <TableRow android:layout_height="wrap_content"
+            android:gravity="left"
+            >
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/default_icon_user"
+                android:layout_marginLeft="15dp"
+                />
+            <TextView
+                android:id="@+id/tv_msg_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试数据"
+                android:background="@drawable/dialogue_detail_left"
+                android:layout_gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/tv_date_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:text="2014/10/10" />
+            </TableRow>
+</TableLayout>
+<TableLayout
+    android:id="@+id/tl_send"
+    android:layout_width="match_parent"
+    android:shrinkColumns="1"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    >
+    <TableRow android:layout_height="wrap_content"
+        android:gravity="right"
+        >
+        <TextView
+            android:id="@+id/tv_date_send"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:text="2014/10/10"
+            />
+        <TextView
+            android:id="@+id/tv_msg_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试数据"
+            android:background="@drawable/dialogue_detail_right"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/default_icon_user"
+            android:layout_marginRight="15dp"
+            />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

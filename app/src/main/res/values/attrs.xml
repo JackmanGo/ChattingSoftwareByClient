@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TopBarAttr">
+        <attr name="title_name" format="string" />
+        <attr name="show_back" format="boolean" />
+        <attr name="show_action" format="boolean" />
+        <attr name="action_img" format="reference"/>
+    </declare-styleable>
+
+</resources>

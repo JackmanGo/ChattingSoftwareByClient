@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.wang.imitation_weichat" >
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:name=".BaseApplication"
+        >
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service  android:name="com.example.wang.service.CoreService"></service>
+        <activity android:name=".HomeActivity" android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity android:name=".DialogueActivity" android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity android:name=".AddFriend"></activity>
+        <activity android:name=".SearchFriend"></activity>
+        <activity android:name=".UserDetail"></activity>
+        <activity android:name=".DisposeVerify"></activity>
+        <activity android:name=".FriendDetail"></activity>
+    </application>
+
+</manifest>

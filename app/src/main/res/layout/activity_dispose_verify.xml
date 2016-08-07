@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myAttrs="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.wang.view.TopBar
+        android:id="@+id/disposeverify_topbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        myAttrs:title_name="用户请求"
+        myAttrs:show_action="false"
+        />
+
+    <ListView
+        android:id="@+id/lv_verify"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        />
+</LinearLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myAttrs="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<com.example.wang.view.TopBar
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    myAttrs:title_name="消息"
+    myAttrs:show_action="false"
+    myAttrs:show_back="false"
+    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@mipmap/search_bar_bg"
+        >
+        <EditText
+            android:id="@+id/message_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="搜索..."
+            android:drawableLeft="@mipmap/search_bar_icon_normal"
+            android:textColor="#000"
+            android:focusable="true"
+            android:singleLine="true"
+            android:layout_marginLeft="3dp"
+            android:background="@drawable/search_bar_edit_bg"
+            />
+      </LinearLayout>
+    <ListView
+        android:id="@+id/message_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+</LinearLayout>
