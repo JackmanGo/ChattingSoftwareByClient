@@ -7,13 +7,13 @@ import android.text.TextUtils;
  * Created by wang on 16-1-27.
  */
 public class InfoUtils {
-    public static String SOCKET_IP = "127.0.0.1:8080";
+    public static String SOCKET_IP = "192.168.2.103:8080";
     public static int SOCKET_PORT = 10000;
-    public static String LOGIN_URL = "http://"+SOCKET_IP+"/bigchat_web/login.action";
-    public static String REGISTER_URL = "http://"+SOCKET_IP+"/bigchat_web/register.action";
-    public static String SEARCH_URL="http://"+SOCKET_IP+"/bigchat_web/findOtherUser.action";
-    public static String AgreeFriend_URL = "http://"+SOCKET_IP+"/bigchat_web/agreeAddFriend.action";
-    public static String GETAllFriend_URL = "http://"+SOCKET_IP+"/bigchat_web/getAllFriends.action";
+    public static String LOGIN_URL = "http://"+SOCKET_IP+"/login";
+    public static String REGISTER_URL = "http://"+SOCKET_IP+"/register";
+    public static String SEARCH_URL="http://"+SOCKET_IP+"/findOtherUser";
+    public static String AgreeFriend_URL = "http://"+SOCKET_IP+"/agreeAddFriend";
+    public static String GETAllFriend_URL = "http://"+SOCKET_IP+"/getAllFriends";
     public static String getUsername(){
         SharedPreferences sharedPreferences =  UiUtils.getContext().getSharedPreferences("login_info",UiUtils.getContext().MODE_PRIVATE);
         String save_username =  sharedPreferences.getString("username",null);

@@ -123,8 +123,8 @@ public class RegisterFragment extends BaseFragment {
         //执行网络请求
         //创建请求参数
         RequestBody formBody = new FormEncodingBuilder()
-                .add("user_id",URLEncoder.encode(username,"UTF-8"))
-                .add("user_password",URLEncoder.encode(password,"UTF-8"))
+                .add("userId",URLEncoder.encode(username,"UTF-8"))
+                .add("userPassword",URLEncoder.encode(password,"UTF-8"))
                 .build();
 //创建一个Request
         final Request request = new Request.Builder()

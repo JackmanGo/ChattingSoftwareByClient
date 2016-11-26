@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,8 +123,8 @@ public class LoginFragment extends BaseFragment {
         //执行网络请求
         //创建请求参数
         RequestBody formBody = new FormEncodingBuilder()
-                .add("user_id", URLEncoder.encode(username,"UTF-8"))
-                .add("user_password",URLEncoder.encode(password,"UTF-8"))
+                .add("userId", URLEncoder.encode(username,"UTF-8"))
+                .add("userPassword",URLEncoder.encode(password,"UTF-8"))
                 .build();
 //创建一个Request
         final Request request = new Request.Builder()
@@ -148,6 +149,7 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void onResponse(final Response response) throws IOException {
                 String response_json =  response.body().string();
+                Log.d("inter",response_json);
                 try {
                     JSONObject jsonObject = new JSONObject(response_json);
                     final  String result = jsonObject.getString("result");
