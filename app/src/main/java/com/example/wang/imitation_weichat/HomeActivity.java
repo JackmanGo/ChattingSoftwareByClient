@@ -54,7 +54,7 @@ public class HomeActivity extends BaseActivity {
     private String text;
 
     private  ServiceMethod coreServiceMethod;
-    private ServiceConnection coreServiceConnection;
+    private ServiceConnection monitorServiceConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,11 +130,12 @@ public class HomeActivity extends BaseActivity {
     }
     //向服务器发送认证信息
     private void authInfos(){
-        System.out.println("开始启动服务。。。。。");
+        Log.d("socketLog","开始启动服务。。。。。");
         Intent serviceIntent = new Intent(this,CoreService.class);
         startService(serviceIntent);
-        coreServiceConnection = new CoreServiceConnection();
-        bindService(serviceIntent,coreServiceConnection,BIND_AUTO_CREATE);
+        //监听网络的变化，用于重新链接socket
+        monitorServiceConnection = new MonitorServiceConnection();
+        bindService(serviceIntent,monitorServiceConnection,BIND_AUTO_CREATE);
     }
 
     @Override
@@ -142,7 +143,7 @@ public class HomeActivity extends BaseActivity {
         super.onDestroy();
         unregisterReceiver(pushDataBroadcastReceiver);
         unregisterReceiver(netWorkBroadcastReceiver);
-        unbindService(coreServiceConnection);
+        unbindService(monitorServiceConnection);
     }
     //设置未读数
      public void setChatUnReadNum(String unReadNum){
@@ -208,7 +209,7 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-    class CoreServiceConnection implements android.content.ServiceConnection{
+    class MonitorServiceConnection implements android.content.ServiceConnection{
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {

@@ -1,6 +1,8 @@
 package com.example.wang.connecter;
 
 
+import android.util.Log;
+
 import com.example.wang.utils.InfoUtils;
 
 import java.io.IOException;
@@ -26,7 +28,7 @@ public class Connector {
     public void connect() throws IOException {
         // 三次握手
         if (socket == null || socket.isClosed()) {
-            socket = new Socket(InfoUtils.SOCKET_IP, InfoUtils.SOCKET_PORT);
+            socket = new Socket(InfoUtils.SOCKET_CHANNEL, InfoUtils.SOCKET_PORT);
         }
         //发送消息
        new Thread(new SendMessage()).start();
@@ -73,7 +75,7 @@ public class Connector {
     }
     public void putRequest(String sendMessage){
         try {
-            System.out.println(sendMessage);
+            Log.d("socketLog","发送数据"+sendMessage);
             queue.put(sendMessage);
         } catch (InterruptedException e) {
             e.printStackTrace();

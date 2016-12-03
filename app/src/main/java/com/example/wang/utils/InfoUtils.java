@@ -8,6 +8,7 @@ import android.text.TextUtils;
  */
 public class InfoUtils {
     public static String SOCKET_IP = "192.168.2.103:8080";
+    public static String SOCKET_CHANNEL="192.168.2.103";
     public static int SOCKET_PORT = 10000;
     public static String LOGIN_URL = "http://"+SOCKET_IP+"/login";
     public static String REGISTER_URL = "http://"+SOCKET_IP+"/register";

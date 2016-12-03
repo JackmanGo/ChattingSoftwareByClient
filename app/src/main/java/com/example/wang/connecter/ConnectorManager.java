@@ -1,6 +1,8 @@
 package com.example.wang.connecter;
 
 
+import android.util.Log;
+
 import com.example.wang.request.AuthRequest;
 import com.example.wang.request.Request;
 
@@ -32,7 +34,8 @@ public class ConnectorManager implements Connector.ConnectorListener {
         connector = new Connector();
         connector.setConnectorListener(this);
         connector.connect();
-        System.out.println(auth.getData());
+        //System.out.println(auth.getData());
+        Log.d("socketLog",auth.getData());
         connector.auth(auth.getData());
     }
     //发送消息

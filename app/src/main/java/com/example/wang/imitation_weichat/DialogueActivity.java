@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -93,6 +94,7 @@ public class DialogueActivity extends BaseActivity implements View.OnClickListen
         ChatsDao.insertChats(chat_id,messageContent, System.currentTimeMillis() + "");
         input_detail.setText("");
         //数据发送给服务器
+        Log.d("socketLog","发送数据为"+messageContent);
         Request sendMessage  = new TextRequest(InfoUtils.getUsername(),chat_id,messageContent);
         //设置监听
         ConnectorManager.getInstance().setConnectorListener(new CoreService());

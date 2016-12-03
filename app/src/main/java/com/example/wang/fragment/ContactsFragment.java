@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +25,7 @@ import com.example.wang.dao.VerifyDao;
 import com.example.wang.imitation_weichat.AddFriend;
 import com.example.wang.imitation_weichat.DisposeVerify;
 import com.example.wang.imitation_weichat.FriendDetail;
+import com.example.wang.imitation_weichat.HomeActivity;
 import com.example.wang.imitation_weichat.R;
 import com.example.wang.utils.InfoUtils;
 import com.example.wang.utils.ToastUtils;
@@ -43,6 +45,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * Created by wang on 16-1-20.
@@ -54,10 +57,10 @@ public class ContactsFragment extends BaseFragment {
     private TextView no_read_verify;
     private int allUnReadMessage;
     private ListView contacts_list;
-    private OkHttpClient okHttpClient;
+    private OkHttpClient okHttpClient = UiUtils.getOkHttpClient();
     private JSONObject jsonObject;
-    private Cursor myFriend_cursor;
-
+    private Cursor myFriendCursor;
+    private List<String> friends;
 
     @Nullable
     @Override
@@ -75,10 +78,19 @@ public class ContactsFragment extends BaseFragment {
         contacts_list = (ListView) view.findViewById(R.id.contacts_list);
     }
     private void initData(){
-        okHttpClient = UiUtils.getOkHttpClient();
-        myFriend_cursor = MyFriendsDao.getAllMyFriendsCursor();
-        FriendsAdapter friendsAdapter = new FriendsAdapter(UiUtils.getContext(), myFriend_cursor);
-        contacts_list.setAdapter(friendsAdapter);
+        // okHttpClient = UiUtils.getOkHttpClient();
+        //访问api获取好友列表
+         friends = MyFriendsDao.getAllMyFriendsFromServer();
+        if(friends.size()==0){
+            //网络链接失败，获取本地数据库
+            myFriendCursor = MyFriendsDao.getAllMyFriendsCursor();
+            FriendsCursorAdapter friendsCursorAdapter = new FriendsCursorAdapter(UiUtils.getContext(), myFriendCursor);
+            contacts_list.setAdapter(friendsCursorAdapter);
+        }else{
+            FriendsListAdapter friendsListAdapterListAdapter = new FriendsListAdapter();
+            contacts_list.setAdapter(friendsListAdapterListAdapter);
+        }
+
     }
     private void initListener(){
         //监听变化
@@ -88,9 +100,10 @@ public class ContactsFragment extends BaseFragment {
                 super.onChange(selfChange);
                 //cursorAdapter不能使用notifyDataSetChanged来实时更新，而使用cursor调用requery即可
                 //messageAdapter.notifyDataSetChanged();
-                myFriend_cursor.requery();
+                myFriendCursor.requery();
             }
         });
+        //跳转到添加好友页面
         if(contacts_topbar.actionView!=null){
             contacts_topbar.actionView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -99,6 +112,7 @@ public class ContactsFragment extends BaseFragment {
                 }
             });
         }
+        //处理好友请求
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +123,7 @@ public class ContactsFragment extends BaseFragment {
 
             }
         });
-        //监听变化
+        //显示待处理的好友请求数
         UiUtils.getContext().getContentResolver() .registerContentObserver(Uri.parse("content://waitForVerify"), true, new ContentObserver(new Handler()) {
             @Override
             public void onChange(boolean selfChange) {
@@ -124,10 +138,24 @@ public class ContactsFragment extends BaseFragment {
                 }
             }
         });
+        openDialogue();
+    }
+    private void  gotoAddFriendActivity(){
+        Intent gotoAddFriend = new Intent(UiUtils.getContext(),AddFriend.class);
+        gotoAddFriend.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(gotoAddFriend);
+    }
+    private void gotoDisposeVerify(){
+        Intent intent = new Intent(UiUtils.getContext(),DisposeVerify.class);
+        startActivity(intent);
+    }
+
+    private void openDialogue(){
+        //listview点击处理,打开对话框
         contacts_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               TextView tv_friend_id = (TextView) view.findViewById(R.id.friend_id);
+                TextView tv_friend_id = (TextView) view.findViewById(R.id.friend_id);
                 final String friend_id = tv_friend_id.getText().toString();
                 //执行网络请求
                 //创建请求参数
@@ -150,12 +178,12 @@ public class ContactsFragment extends BaseFragment {
 
                     @Override
                     public void onFailure(Request request, IOException e) {
-                      UiUtils.runOnUiThread(new Runnable() {
-                          @Override
-                          public void run() {
-                              ToastUtils.showToast("网络请求超时");
-                          }
-                      });
+                        UiUtils.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.showToast("网络请求超时");
+                            }
+                        });
                     }
                     @Override
                     public void onResponse(Response response) throws IOException {
@@ -190,20 +218,12 @@ public class ContactsFragment extends BaseFragment {
                 });
             }
         });
-    }
-    private void  gotoAddFriendActivity(){
-        Intent gotoAddFriend = new Intent(UiUtils.getContext(),AddFriend.class);
-        gotoAddFriend.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(gotoAddFriend);
-    }
-    private void gotoDisposeVerify(){
-        Intent intent = new Intent(UiUtils.getContext(),DisposeVerify.class);
-        startActivity(intent);
+
     }
 
-    class FriendsAdapter extends CursorAdapter{
+    class FriendsCursorAdapter extends CursorAdapter{
 
-        public FriendsAdapter(Context context, Cursor c) {
+        public FriendsCursorAdapter(Context context, Cursor c) {
             super(context, c);
         }
 
@@ -219,12 +239,47 @@ public class ContactsFragment extends BaseFragment {
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-           FriendsAdapterHolder friendsAdapterHolder = (FriendsAdapterHolder) view.getTag();
+            FriendsAdapterHolder friendsAdapterHolder = (FriendsAdapterHolder) view.getTag();
             friendsAdapterHolder.friends_id.setText(cursor.getString(cursor.getColumnIndex("friend_id")));
+        }
+    }
+
+    class FriendsListAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            return friends.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return friends.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            FriendsAdapterHolder friendsAdapterHolder = null;
+            if(convertView==null) {
+                convertView= View.inflate(UiUtils.getContext(), R.layout.item_myfriends, null);
+                friendsAdapterHolder = new FriendsAdapterHolder();
+                friendsAdapterHolder.friends_head = (ImageView) convertView.findViewById(R.id.friend_head);
+                friendsAdapterHolder.friends_id = (TextView) convertView.findViewById(R.id.friend_id);
+                convertView.setTag(friendsAdapterHolder);
+            }else {
+                friendsAdapterHolder = (FriendsAdapterHolder) convertView.getTag();
+            }
+            friendsAdapterHolder.friends_id.setText(friends.get(position));
+            return convertView;
         }
     }
     static class FriendsAdapterHolder{
         ImageView friends_head;
         TextView friends_id;
     }
+
 }

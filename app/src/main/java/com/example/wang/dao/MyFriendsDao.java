@@ -31,7 +31,8 @@ public class MyFriendsDao extends BaseDao {
     private static OkHttpClient mOkHttpClient = UiUtils.getOkHttpClient();
     private static RequestBody formBody;
 
-    public static void getAllMyFriendsFromServer() {
+    public static List<String> getAllMyFriendsFromServer() {
+        final List<String> friends = new ArrayList<String>();
         //访问网络
         //创建请求参数
         try {
@@ -63,12 +64,14 @@ public class MyFriendsDao extends BaseDao {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                 String result_json = response.body().string();
+                String result_json = response.body().string();
                 try {
                     jsonObject = new JSONObject(result_json);
                     JSONArray jsonArray  =  jsonObject.getJSONArray("info");
                     for(int i=0;i<jsonArray.length();i++){
-                        allFriend.add(jsonArray.getString(i));
+                        String friend = jsonArray.getString(i);
+                        friends.add(friend);
+                        allFriend.add(friend);
                     }
                     //序列化保存好友信息(更新本地数据库)
                     Cursor cursor = getAllMyFriendsCursor();
@@ -91,6 +94,7 @@ public class MyFriendsDao extends BaseDao {
                 }
             }
         });
+        return friends;
     }
     private static void saveInSQLite(String friends_id){
         SQLiteDatabase sqLiteDatabase = createGroupDatabase();
